@@ -14,6 +14,16 @@ export default {
 			}
 		},
 		extend: {
+			gridRow: {
+				'span-7': 'span 7 / span 7',
+				'span-14': 'span 14 / span 14'
+			},
+			gridTemplateRows: {
+				// Simple 8 row grid
+				'8': 'repeat(8, minmax(0, 1fr))',
+				'14': 'repeat(14, minmax(0, 1fr))',
+				'16': 'repeat(16, minmax(0, 1fr))'
+			},
 			colors: {
 				magnum: {
 					'50': '#fff9ed',

@@ -1,15 +1,10 @@
-<script lang="ts">
-	import { createAccordion, melt } from '@melt-ui/svelte';
-	import { slide } from 'svelte/transition';
+<script>
+	import Accordion from '$lib/components/accordion.svelte';
+	import Avatar from '$lib/components/avatar.svelte';
+	import Checkbox from '$lib/components/checkbox.svelte';
+	import Collapsible from '$lib/components/collapsible.svelte';
 
-	const {
-		elements: { content, item, trigger, root },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: 'item-2',
-	});
-
-	const items = [
+	let accordionItems = [
 		{
 			id: 'item-1',
 			title: 'What is it?',
@@ -20,45 +15,27 @@
 		{
 			id: 'item-2',
 			title: 'Can I customize it?',
-			description: 'Totally, it is 100% stylable and overridable.'
+			description: 'Totally, it is 100% stylable and overridable.',
+			disabled: false
 		},
 		{
 			id: 'item-3',
 			title: 'Svelte is awesome, huh?',
-			description: 'Yes, and so are you!'
+			description: 'Yes, and so are you!',
+			disabled: true
 		}
 	];
-
-	let className = '';
-	export { className as class };
 </script>
 
-<div class="mx-auto w-[18rem] max-w-full rounded-xl bg-lime-200 shadow-lg sm:w-[25rem]" {...$root}>
-	{#each items as { id, title, description, disabled }, i}
-		{@const props = { value: id, disabled }}
-		<div
-			class="overflow-hidden transition-colors first:rounded-t-xl last:rounded-b-xl"
-			use:melt={$item(props)}
-		>
-			<h2 class="flex">
-				<button
-					class="flex flex-1 cursor-pointer items-center justify-between bg-white px-5 py-5 text-base font-medium leading-none text-black transition-colors hover:bg-neutral-100 focus:!ring-0 focus-visible:text-magnum-800 border-t border-t-neutral-300 data-[disabled]:cursor-not-allowed data-[disabled]:text-neutral-400"
-					use:melt={$trigger(props)}
-				>
-					{title}
-				</button>
-			</h2>
-			{#if $isSelected(id)}
-				<div
-					class="content overflow-hidden bg-neutral-100 text-sm text-neutral-600"
-					use:melt={$content(props)}
-					transition:slide
-				>
-					<div class="px-5 py-5">
-						{description}
-					</div>
-				</div>
-			{/if}
+<div class="grid grid-cols-4 items-center gap-5 p-[5rem]">
+	<Accordion items={accordionItems} />
+	<Avatar initials={'DW'} />
+	<form class="max-w[10rem]">
+		<div class="flex justify-start items-start flex-col gap-2">
+			<Checkbox label={'Accept Terms and Conditions'} />
+			<Checkbox label={'Another Thing'} />
+			<Checkbox label={'And Yet Another'} />
 		</div>
-	{/each}
+	</form>
+	<Collapsible />
 </div>
